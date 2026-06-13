@@ -1,0 +1,32 @@
+/opt
+├── containerd
+│   ├── bin
+│   └── lib
+├── microservice-project
+│   └── microservices-demo
+│       ├── cloudbuild.yaml
+│       ├── docs
+│       ├── helm-chart
+│       ├── istio-manifests
+│       ├── kubernetes-manifests
+│       ├── kustomize
+│       ├── LICENSE
+│       ├── protos
+│       ├── README.md
+│       ├── release
+│       ├── skaffold.yaml
+│       ├── src
+│       └── terraform
+└── teamwork
+    └── ceshi2026
+        ├── chaos-test
+        ├── data
+        ├── deploy
+        ├── docs
+        ├── monitor
+        ├── README.md
+        ├── service-code
+        ├── test-script
+        └── 服务器目录结构.txt
+
+23 directories, 6 files

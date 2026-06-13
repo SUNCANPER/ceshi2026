@@ -1,0 +1,21 @@
+NAMESPACE     NAME                                   READY   STATUS    RESTARTS      AGE
+kube-system   pod/coredns-65dcc469f7-rsrq7           1/1     Running   4 (60m ago)   8h
+kube-system   pod/etcd-minikube                      1/1     Running   4 (60m ago)   8h
+kube-system   pod/kube-apiserver-minikube            1/1     Running   4 (60m ago)   8h
+kube-system   pod/kube-controller-manager-minikube   1/1     Running   5 (60m ago)   8h
+kube-system   pod/kube-proxy-4npjq                   1/1     Running   4 (60m ago)   8h
+kube-system   pod/kube-scheduler-minikube            1/1     Running   4 (60m ago)   8h
+kube-system   pod/storage-provisioner                1/1     Running   8 (50m ago)   8h
+
+NAMESPACE     NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE
+default       service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP                  7h58m
+kube-system   service/kube-dns     ClusterIP   10.96.0.10   <none>        53/UDP,53/TCP,9153/TCP   8h
+
+NAMESPACE     NAME                        DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+kube-system   daemonset.apps/kube-proxy   1         1         1       1            1           kubernetes.io/os=linux   8h
+
+NAMESPACE     NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+kube-system   deployment.apps/coredns   1/1     1            1           8h
+
+NAMESPACE     NAME                                 DESIRED   CURRENT   READY   AGE
+kube-system   replicaset.apps/coredns-65dcc469f7   1         1         1       8h
