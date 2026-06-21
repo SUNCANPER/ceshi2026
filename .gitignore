@@ -1,0 +1,9 @@
+# 算法源码不上传
+TraceVAE/
+# 屏蔽大镜像包
+*.tar
+*.tar.gz
+# 缓存文件
+__pycache__/
+*.log
+*.pyc
