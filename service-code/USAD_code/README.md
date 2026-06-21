@@ -1,6 +1,6 @@
 # USAD 算法复现与多论文对比实验
 
-本目录包含软件测试与维护大作业中 **AIOps 异常检测** 部分的源码，以 KDD 2020 论文 **USAD**（*UnSupervised Anomaly Detection on Multivariate Time Series*）为主复现算法，并在同一套 Chaos Mesh 故障注入数据上，分别与 KDD 2019 **OmniAnomaly**、AAAI 2021 **RAMED** 进行横向对比实验。
+本目录包含软件测试与维护大作业中 **异常检测** 部分的源码，以 KDD 2020 论文 **USAD**（*UnSupervised Anomaly Detection on Multivariate Time Series*）为主复现算法，并在同一套 Chaos Mesh 故障注入数据上，分别与 KDD 2019 **OmniAnomaly**、AAAI 2021 **RAMED** 进行横向对比实验。
 
 实验数据来源：在 Kubernetes 集群中对 `paymentservice` 注入故障期间，由 Prometheus + Grafana 采集并导出的 CPU、内存时序指标（CSV 格式）。
 
@@ -18,7 +18,7 @@ USAD_code/
 ├── run1.py                # USAD 探索版（训练分阶段 + 故障演进分析）
 ├── cpu.csv                # 实验用 CPU 利用率时序数据
 ├── memory.csv             # 实验用内存占用时序数据
-└── results/               # （可选）实验结果截图，用于报告与汇报
+└── results/               # 部分实验结果
     └── *.png
 ```
 
@@ -33,7 +33,7 @@ USAD_code/
 | `cpu.csv` | Prometheus 导出的 `paymentservice` **CPU 利用率**时序，与 `memory.csv` 按时间戳对齐后作为模型输入。 |
 | `memory.csv` | Prometheus 导出的 `paymentservice` **内存占用**时序。 |
 | `requirements.txt` | 运行上述脚本所需的 Python 第三方库。 |
-| `results/` | 存放实验运行截图（可选），便于报告引用。 |
+| `results/` | 存放实验运行部分结果 |
 
 > **说明：** 三个主脚本（`run_usad.py`、`compare1.py`、`ramed1.py`）均从**当前目录**读取 `cpu.csv` 与 `memory.csv`，运行前请确保数据文件与脚本位于同一目录。
 
@@ -65,8 +65,6 @@ python compare1.py
 # 3. USAD vs RAMED 对比（AAAI'21）
 python ramed1.py
 
-# 4. （可选）USAD 探索版，含故障演进三态分析
-python run1.py
 ```
 
 ---
