@@ -5085,7 +5085,11 @@ test-script
 README.md
 
 /opt/teamwork/ceshi2026/data:
+app+dockerfile.zip
 README.md
+traces_full.json
+traces_raw.json
+tracevae.zip
 
 /opt/teamwork/ceshi2026/deploy:
 adservice.yaml
