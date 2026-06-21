@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微服务项目前期搭建部署流程看板</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        .step-node {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .step-node:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+        .active-node {
+            border-color: #3b82f6 !important;
+            background-color: #1e3a8a/30 !important;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- 顶部导航栏 -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 text-white p-2.5 rounded-xl shadow-lg shadow-blue-500/20">
+                    <i class="fa-solid fa-network-wired text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        微服务前期搭建部署架构看板
+                        <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/20">K8s v1.27.16</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">大作业第 1 - 3 阶段现场环境实操轨迹与连通性图谱</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 text-sm">
+                <span class="text-slate-400"><i class="fa-solid fa-server mr-1 text-blue-400"></i> 阿里云 ECS: 47.94.7.122</span>
+                <span class="h-4 w-px bg-slate-800"></span>
+                <span class="text-slate-400"><i class="fa-solid fa-user-shield mr-1 text-emerald-400"></i> root 专用</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主容器 -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- 左侧：纯 HTML 流程拓扑版面 -->
+        <section class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl">
+            <div class="border-b border-slate-800 bg-slate-950/60 px-5 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="flex h-2.5 w-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+                    <h2 class="text-sm font-semibold text-slate-200">交互式架构流程图</h2>
+                </div>
+                <div class="flex items-center gap-2 text-xs">
+                    <span class="text-slate-400">提示: 点击流程节点可下探查看具体命令与状态校验</span>
+                </div>
+            </div>
+
+            <!-- 可观测拓扑流水线（纯 HTML 连接技术） -->
+            <div class="flex-grow p-6 flex flex-col gap-4 bg-slate-950/40 overflow-y-auto max-h-[620px]">
+                
+                <!-- 节点 S1 -->
+                <div id="btn-S1" onclick="nodeClicked('S1')" class="step-node active-node cursor-pointer p-4 bg-slate-900 border border-slate-850 rounded-xl flex items-center justify-between transition-all duration-200">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">
+                            01
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Phase 1: 环境前置准备</div>
+                            <div class="text-sm font-bold text-white">1. 阿里云安全组端口通道配置</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded">安全策略</span>
+                        <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="flex justify-center -my-2">
+                    <div class="h-6 w-0.5 bg-gradient-to-b from-blue-500 to-slate-800"></div>
+                </div>
+
+                <!-- 节点 S2 -->
+                <div id="btn-S2" onclick="nodeClicked('S2')" class="step-node cursor-pointer p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between transition-all duration-200">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">
+                            02
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Phase 1: 环境前置准备</div>
+                            <div class="text-sm font-bold text-white">2. 安装并配置 Docker 镜像引擎</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded">容器底座</span>
+                        <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="flex justify-center -my-2">
+                    <div class="h-6 w-0.5 bg-gradient-to-b from-blue-500 to-slate-800"></div>
+                </div>
+
+                <!-- 节点 S3 -->
+                <div id="btn-S3" onclick="nodeClicked('S3')" class="step-node cursor-pointer p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between transition-all duration-200">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">
+                            03
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Phase 1: 环境前置准备</div>
+                            <div class="text-sm font-bold text-white">3. 拉起 Minikube 单机虚拟 K8s 底座</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded">K8s底座</span>
+                        <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="flex justify-center -my-2">
+                    <div class="h-6 w-0.5 bg-gradient-to-b from-slate-800 to-slate-800"></div>
+                </div>
+
+                <!-- 节点 S4 -->
+                <div id="btn-S4" onclick="nodeClicked('S4')" class="step-node cursor-pointer p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between transition-all duration-200">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 font-bold">
+                            04
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Phase 2: 团队协作与同步</div>
+                            <div class="text-sm font-bold text-white">4. Git 配置与 GitHub 免密同步</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-slate-800 text-slate-400 border border-slate-700 px-2 py-0.5 rounded">版本协同</span>
+                        <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="flex justify-center -my-2">
+                    <div class="h-6 w-0.5 bg-gradient-to-b from-slate-800 to-emerald-800"></div>
+                </div>
+
+                <!-- 节点 S5 -->
+                <div id="btn-S5" onclick="nodeClicked('S5')" class="step-node cursor-pointer p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between transition-all duration-200">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+                            05
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Phase 3: 开源微服务部署</div>
+                            <div class="text-sm font-bold text-white">5. 清空 TrainTicket 架构残留</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">资源清理</span>
+                        <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="flex justify-center -my-2">
+                    <div class="h-6 w-0.5 bg-gradient-to-b from-emerald-800 to-emerald-800"></div>
+                </div>
+
+                <!-- 节点 S6 -->
+                <div id="btn-S6" onclick="nodeClicked('S6')" class="step-node cursor-pointer p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between transition-all duration-200">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+                            06
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Phase 3: 开源微服务部署</div>
+                            <div class="text-sm font-bold text-white">6. 离线载入 Online Boutique 镜像</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">离线分发</span>
+                        <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="flex justify-center -my-2">
+                    <div class="h-6 w-0.5 bg-gradient-to-b from-emerald-800 to-emerald-800"></div>
+                </div>
+
+                <!-- 节点 S7 -->
+                <div id="btn-S7" onclick="nodeClicked('S7')" class="step-node cursor-pointer p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between transition-all duration-200">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+                            07
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Phase 3: 开源微服务部署</div>
+                            <div class="text-sm font-bold text-white">7. 批量配置并应用 imagePullPolicy: Never</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded"> Never部署</span>
+                        <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="flex justify-center -my-2">
+                    <div class="h-6 w-0.5 bg-gradient-to-b from-emerald-800 to-emerald-800"></div>
+                </div>
+
+                <!-- 节点 S8 -->
+                <div id="btn-S8" onclick="nodeClicked('S8')" class="step-node cursor-pointer p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between transition-all duration-200">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+                            08
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Phase 4: 自研开发与测试</div>
+                            <div class="text-sm font-bold text-white">8. 部署自研微服务 user-extra-svc</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">自研开发</span>
+                        <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="flex justify-center -my-2">
+                    <div class="h-6 w-0.5 bg-gradient-to-b from-emerald-800 to-emerald-800"></div>
+                </div>
+
+                <!-- 节点 S9 -->
+                <div id="btn-S9" onclick="nodeClicked('S9')" class="step-node cursor-pointer p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between transition-all duration-200">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+                            09
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Phase 4: 自研开发与测试</div>
+                            <div class="text-sm font-bold text-white">9. K8s 内部 Busybox 连通性测试</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">业务联调</span>
+                        <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 图例说明 -->
+            <div class="border-t border-slate-800 bg-slate-950/60 px-5 py-3 flex items-center justify-between text-xs text-slate-400">
+                <div class="flex gap-4 font-semibold">
+                    <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-blue-500"></span> 环境与安全</span>
+                    <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-slate-500"></span> 团队协同</span>
+                    <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span> 微服务联调</span>
+                </div>
+                <button onclick="resetView()" class="hover:text-blue-400 transition-colors">
+                    <i class="fa-solid fa-arrows-rotate mr-1"></i> 重置视图
+                </button>
+            </div>
+        </section>
+
+        <!-- 右侧：属性详情探测器 -->
+        <section class="lg:col-span-5 flex flex-col gap-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden" id="detailsCard">
+                <!-- 背景大水印 -->
+                <div class="absolute -right-8 -bottom-8 text-slate-800/10 text-9xl font-bold select-none pointer-events-none" id="watermark">
+                    01
+                </div>
+
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs uppercase tracking-widest text-blue-500 font-semibold animate-pulse" id="phaseIndicator">PHASE 1 : 环境前置准备</span>
+                    <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-0.5 rounded-full text-xs font-medium" id="nodeIdLabel">节点 S1</span>
+                </div>
+
+                <h3 class="text-lg font-bold text-white mb-2" id="nodeTitle">1. 阿里云安全组配置与规划</h3>
+                <p class="text-slate-400 text-sm mb-5 leading-relaxed" id="nodeDescription">在进行任何命令行操作前，必须通过阿里云控制台打通网络安全组策略。这是外部通过 Grafana、Prometheus 以及 ChaosMesh 进行链路状态监控与故障观测的前置大门。</p>
+
+                <!-- 命令终端盒 -->
+                <div class="mb-5">
+                    <div class="flex items-center justify-between bg-slate-950 px-4 py-2 rounded-t-xl border-t border-x border-slate-800">
+                        <span class="text-xs text-slate-500 font-mono">Terminal Executable</span>
+                        <button onclick="copyCommand()" class="text-xs text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-1">
+                            <i class="fa-regular fa-copy" id="copyIcon"></i> <span id="copyText">复制命令</span>
+                        </button>
+                    </div>
+                    <pre class="bg-slate-950 p-4 rounded-b-xl border-b border-x border-slate-800 overflow-x-auto text-xs code-font text-emerald-400 whitespace-pre" id="nodeCommand"># 必须开放的阿里云入方向端口映射规则：
+- TCP 80: 商城前端 (Google Online Boutique Frontend)
+- TCP 3000: Grafana 可视化分析大盘
+- TCP 9090: Prometheus 指标时序采集器
+- TCP 2345: ChaosMesh 故障注入控制台
+- TCP 30000-32767: Kubernetes 随机映射 NodePort 物理区间</pre>
+                </div>
+
+                <!-- 成功标准与历史坑点 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-emerald-950/20 border border-emerald-500/10 p-3 rounded-xl">
+                        <h4 class="text-xs font-semibold text-emerald-400 mb-1 flex items-center gap-1">
+                            <i class="fa-solid fa-circle-check"></i> 成功验证标志
+                        </h4>
+                        <p class="text-xs text-slate-400" id="nodeVerification">安全组保存成功后，阿里云控制台出入站规则列表更新，外部浏览器 telnet 47.94.7.122 对应的监控端口可连通。</p>
+                    </div>
+                    <div class="bg-amber-950/20 border border-amber-500/10 p-3 rounded-xl">
+                        <h4 class="text-xs font-semibold text-amber-400 mb-1 flex items-center gap-1">
+                            <i class="fa-solid fa-triangle-exclamation"></i> 历史踩坑避错
+                        </h4>
+                        <p class="text-xs text-slate-400" id="nodeTraps">切勿忽略 30000-32767 端口的放行，K8s 集群服务通过 NodePort 暴露时必须在此物理网段内，否则会被阿里云物理防火墙无情丢包。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主机状态统计 -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-3.5">
+                    <div class="bg-blue-500/10 text-blue-400 p-3 rounded-lg text-lg">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400">Minikube 配置</div>
+                        <div class="text-sm font-semibold text-white">3 vCPU / 6GB RAM</div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-3.5">
+                    <div class="bg-emerald-500/10 text-emerald-400 p-3 rounded-lg text-lg">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400">底座 K8s 引擎</div>
+                        <div class="text-sm font-semibold text-white">K8s v1.27.16</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 文件映射 -->
+            <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-5 flex flex-col gap-3">
+                <h4 class="text-xs font-semibold text-slate-300 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-folder-open text-amber-500"></i> 实操物理文件映射声明
+                </h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    本流程图完美对齐您提交的 <span class="text-slate-200 underline">1. 阿里云服务器操作文档</span> 至 <span class="text-slate-200 underline">7. 微服务检验加论文</span> 系列归档。确保每个节点在您服务器中的物理执行命令全部匹配。
+                </p>
+                <div class="text-[11px] code-font text-slate-500 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                    项目全物理路径：/opt/microservice-project/microservices-demo/kubernetes-manifests
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="border-t border-slate-800 bg-slate-900/20 py-4 text-center text-xs text-slate-500 px-4">
+        <p>© 2026 南开大学《软件测试与维护》大作业项目组 · 基于 TraceVAE 论文无监督异常检测复现流程</p>
+    </footer>
+
+    <!-- 交互与数据逻辑 -->
+    <script>
+        // 完全匹配您上传文档 1-7 号实操轨迹的数据仓库
+        const nodeDb = {
+            "S1": {
+                "phase": "PHASE 1 : 环境前置准备",
+                "watermark": "01",
+                "title": "1. 阿里云安全组配置与规划",
+                "desc": "在进行任何部署动作前，必须在阿里云管理后台添加安全组网络策略。这一步是打通外部监控（Prometheus）、看板（Grafana）及混沌注入（ChaosMesh）和 NodePort 映射的网络物理大前提。",
+                "cmd": "# 必须开放的阿里云入方向端口映射规则：\n- TCP 80: 商城前端 (Google Online Boutique Frontend)\n- TCP 3000: Grafana 可视化分析大盘\n- TCP 9090: Prometheus 指标时序采集器\n- TCP 2345: ChaosMesh 故障注入控制台\n- TCP 30000-32767: Kubernetes 随机映射 NodePort 物理区间",
+                "verify": "安全组策略保存成功，服务器 telnet 测试对应外网端口连通。",
+                "trap": "切勿漏掉 30000-32767 的放行。K8s 容器服务在向集群外直接做端口暴露时，其默认分配端口全部限制在此区间。"
+            },
+            "S2": {
+                "phase": "PHASE 1 : 环境前置准备",
+                "watermark": "02",
+                "title": "2. 安装并配置 Docker 镜像引擎",
+                "desc": "系统依托于 Docker 容器化方案作为底座底驱。需要配置阿里云国内官方 apt 安装源，同时为了避免后续海外镜像拉取因超时死锁，必须在 daemon.json 中注入阿里云加速站凭证。",
+                "cmd": "# 1. 导入阿里云 Docker GPG 密钥并添加软件源\ncurl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg\n\n# 2. 更新软件源并执行高可靠性安装\napt update && apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin\n\n# 3. 开启并验证服务\nsystemctl enable docker && systemctl start docker",
+                "verify": "运行 docker --version 成功输出类似 'Docker version 26.1.0' 的版本号，进程活跃为 Active (running)。",
+                "trap": "多组员共享主机时，一定要配置 /etc/docker/daemon.json 的 registry-mirrors，否则在拉取常规 alpine 和 redis 依赖时极易触发国内并发限流机制。"
+            },
+            "S3": {
+                "phase": "PHASE 1 : 环境前置准备",
+                "watermark": "03",
+                "title": "3. 拉起 Minikube 单机虚拟 K8s 底座",
+                "desc": "在 4核8G 的阿里云单机环境下，通过 Minikube 虚拟容器组底座建立微服务运行层。统一锁定并锁定 K8s 内部运行内核版本为稳定版 v1.27.16，限制 CPU 资源在 3 核，限制运行内存在 6GB。",
+                "cmd": "# 严格使用 root 身份拉起指定版本 Minikube 环境\nminikube start \\\n  --driver=docker \\\n  --cpus=3 \\\n  --memory=6144 \\\n  --disk-size=50g \\\n  --kubernetes-version=v1.27.16 \\\n  --image-mirror-country=cn \\\n  --base-image=gcr.io/k8s-minikube/kicbase:v0.0.46 \\\n  --force",
+                "verify": "执行 kubectl get nodes 输出主机节点状态为 Ready 正常；同时没有出现 SSH 认证失败报错。",
+                "trap": "多用户使用同机时，强烈反对中途 Ctrl+C 强行挂断启动命令，否则必将发生 Minikube 内部 SSH 安全秘钥配置破损，诱发 Permission Denied 崩溃灾难。"
+            },
+            "S4": {
+                "phase": "PHASE 2 : 团队协作与敏捷同步",
+                "watermark": "04",
+                "title": "4. Git 协同配置与 GitHub 免密同步",
+                "desc": "为了支撑组内多人并发协作 and 开发版本追溯，配置全局 git 凭据并通过 ssh-keygen 生成基于 Ed25519 的免密 SSH 安全对，拉起 teamwork 共享团队开发工作目录。",
+                "cmd": "# 1. 注册 Git 全局账户凭证\ngit config --global user.name \"SUNCANPER\"\ngit config --global user.email \"1987134334@qq.com\"\n\n# 2. 本地生成 Ed25519 秘钥对并导入 GitHub 后台\nssh-keygen -t ed25519 -C \"1987134334@qq.com\"\ncat ~/.ssh/id_ed25519.pub\n\n# 3. 创建分工物理子目录\nmkdir -p deploy service-code monitor chaos-test test-script docs data",
+                "verify": "向 GitHub 远程分支 push 首个测试分支没有发生 SSH 握手错误，刷新 GitHub 仓库页面完美复现小组初始化空目录体系。",
+                "trap": "协作前必须优先在本地执行 git pull origin main 融合代码，防止因提交冲突拉跨共享目录下的 K8s yaml 部署逻辑。"
+            },
+            "S5": {
+                "phase": "PHASE 3 : 开源微服务部署与攻坚",
+                "watermark": "05",
+                "title": "5. 清除 TrainTicket 重度残留残留",
+                "desc": "在正式上马第二档微服务 Google Online Boutique 之前，必须对首选失败的 TrainTicket 组件进行彻底资源回收，避免因 TrainTicket 庞大的 JVM 服务造成云主机 CPU 负载和内存 OOM 熔断。",
+                "cmd": "# 1. 递归删除 K8s 集群所有运行中组件和命名空间\ncd /opt/microservice-project/train-ticket/deployment/kubernetes-manifests\nkubectl delete -f ./ --recursive\n\n# 2. 彻底移除磁盘垃圾防止干扰\ncd /opt/microservice-project\nrm -rf train-ticket",
+                "verify": "执行 kubectl get all -n default 应全部返回 'No resources found in default namespace'。",
+                "trap": "TrainTicket 由于服务众多对内存消耗极为苛刻，请一定要通过 delete --recursive 物理剔除，单纯的 kubectl delete pod 是无法拦截由 deployment 自愈机制拉起的自动扩容的。"
+            },
+            "S6": {
+                "phase": "PHASE 3 : 开源微服务部署与攻坚",
+                "watermark": "06",
+                "title": "6. 离线导入 Google Online Boutique 镜像",
+                "desc": "由于国内网络环境无法直接拉取境外 gcr.io 容器包，我们使用宿主机物理中转。在本地拉取完核心镜像打包为 part1.tar 到 part4.tar，传输到服务器宿主机，然后直接通过 eval 变量灌进 Minikube 的 Docker 虚拟空间。",
+                "cmd": "# 1. 宿主机载入离线包\ncd /opt/microservice-project\ndocker load -i part1.tar && docker load -i part2.tar\n# ... 导入其余 redis.tar 及 busybox.tar 等离线包\n\n# 2. 切换终端 Docker 运行时上下文至 Minikube 内部空间 (关键突破点)\neval $(minikube docker-env)\n\n# 3. 校验镜像加载结果\ndocker images | grep google-samples",
+                "verify": "执行 eval 后，再次运行 docker images 能显示完整的 gcr.io/google-samples/microservices-demo 前缀包，即代表内部打通成功。",
+                "trap": "执行 eval $(minikube docker-env) 是临时的。每次打开新的 Terminal 窗口都要重新执行，否则镜像装载行为会停留在阿里云外部宿主机，Minikube 内部依然会由于网络拦截而报错 ErrImagePull。"
+            },
+            "S7": {
+                "phase": "PHASE 3 : 开源微服务部署与攻坚",
+                "watermark": "07",
+                "title": "7. 修改并应用 imagePullPolicy: Never",
+                "desc": "既然镜像已经离线同步进了 Minikube 虚拟空间，我们需要在批量 K8s YAML 中，将默认的 imagePullPolicy 字段强行重写为 Never，命令 K8s 完全不走远程拉取，强制读取本地镜像，从而秒级部署上线。",
+                "cmd": "# 1. 批量重写部署策略为 Never\ncd /opt/microservice-project/microservices-demo/kubernetes-manifests\nfind . -name \"*.yaml\" -type f | xargs sed -i 's/imagePullPolicy: Always/imagePullPolicy: Never/g'\n\n# 2. 执行离线一键部署上线\nkubectl apply -f ./ --recursive\n\n# 3. 监控 Pod 状态\nkubectl get pods -w",
+                "verify": "所有 Pod 状态状态从 ContainerCreating 彻底稳定收敛为 Running 1/1 就绪，商城 80 端口页面能流畅打开、无 500 异常。",
+                "trap": "如果少部分 Deployment 没有显示写出 imagePullPolicy，K8s 会默认当做 Always。因此最好检查一遍 yaml，确保没有被默认漏掉，防止其私自连接境外服务器拉取造成镜像拉取异常死锁。"
+            },
+            "S8": {
+                "phase": "PHASE 4 : 自研开发与服务测试",
+                "watermark": "08",
+                "title": "8. 部署自研微服务 user-extra-svc",
+                "desc": "为了达成大作业第三档的顶格考核标准，在项目根目录下，使用 Python Flask 编写我们自建的积分微服务组件。该服务集成 OpenTelemetry OTLP 数据链路，通过 Deployment 清单将其拉起。",
+                "cmd": "# 1. K8s 创建自研微服务资源\nkubectl apply -f /opt/microservice-project/user-extra-svc.yaml\n\n# 2. 注入 K8s 环境路由配置\nkubectl apply -f /opt/microservice-project/user-extra-svc-service.yaml\n\n# 3. 查看自研服务 Pod 状态\nkubectl get pods | grep user-extra-svc",
+                "verify": "自研 Python Pod 处于稳定 Running 状态，自研的 /health 探测接口正常返回 HTTP 200 代码。",
+                "trap": "不要用旧版缺乏协议头和 insecure 加密设定的 Python 埋点，否则在 K8s 内部会导致向 Jaeger 上报数据时发生 DEADLINE_EXCEEDED 超时或 TLS 握手异常。"
+            },
+            "S9": {
+                "phase": "PHASE 4 : 自研开发与服务测试",
+                "watermark": "09",
+                "title": "9. 集群内部 Busybox 连通性测试",
+                "desc": "在自研服务的宿主环境外部，拉起一个纯净的 Busybox 临时测试容器。利用 wget 工具跨容器向自研服务的 8080 API 网关发送模拟用户请求，验证跨网络拓扑、跨命名空间的调用通畅。",
+                "cmd": "# 1. 拉起 Busybox 连通性探测容器\nkubectl run test-call --image=busybox:latest -- wget -qO- http://user-extra-svc:8080/api/user/info/10086\n\n# 2. 直接拉取 Busybox 容器退出日志\nkubectl logs test-call",
+                "verify": "wget 调用在终端成功输出了我们预设的用户积分及 VIP 等级 JSON 字符：\n{\"credit\":888,\"level\":\"VIP\",\"register_days\":365,\"service\":\"user-extra-svc\",\"user_id\":\"10086\"}",
+                "trap": "确保在 test-call 被触发前，user-extra-svc 所在的 Service 是 Ready 的，否则 wget 会由于 Service 路由尚未生效而报 DNS Resolve Hostname Error 错误。"
+            }
+        };
+
+        // 交互节点点击事件
+        function nodeClicked(nodeId) {
+            // 清理并重新标记所有节点的激活状态
+            const allNodes = document.querySelectorAll('.step-node');
+            allNodes.forEach(n => {
+                n.classList.remove('active-node');
+                // 恢复默认灰色调样式
+                n.classList.add('border-slate-800');
+            });
+
+            // 激活当前节点
+            const activeNode = document.getElementById('btn-' + nodeId);
+            if (activeNode) {
+                activeNode.classList.add('active-node');
+                activeNode.classList.remove('border-slate-800');
+            }
+
+            const data = nodeDb[nodeId];
+            if (!data) return;
+
+            // 渲染详情
+            document.getElementById("phaseIndicator").innerText = data.phase;
+            document.getElementById("nodeIdLabel").innerText = "节点 " + nodeId;
+            document.getElementById("nodeTitle").innerText = data.title;
+            document.getElementById("nodeDescription").innerText = data.desc;
+            document.getElementById("nodeCommand").innerText = data.cmd;
+            document.getElementById("nodeVerification").innerText = data.verify;
+            document.getElementById("nodeTraps").innerText = data.trap;
+            document.getElementById("watermark").innerText = data.watermark;
+
+            // 重置复制按钮状态
+            const copyIcon = document.getElementById("copyIcon");
+            const copyText = document.getElementById("copyText");
+            copyIcon.className = "fa-regular fa-copy";
+            copyText.innerText = "复制命令";
+
+            // 小屏或移动端自动平滑滚动到详情区
+            if (window.innerWidth < 1024) {
+                document.getElementById("detailsCard").scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // 复制到剪切板函数
+        function copyCommand() {
+            const cmdText = document.getElementById("nodeCommand").innerText;
+            
+            // 使用标准 textarea 复制法，确保绕过 K8s web 沙箱跨域限制
+            const textarea = document.createElement("textarea");
+            textarea.value = cmdText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            // 更新复制按钮反馈 UI
+            const copyIcon = document.getElementById("copyIcon");
+            const copyText = document.getElementById("copyText");
+            copyIcon.className = "fa-solid fa-check text-emerald-400";
+            copyText.innerText = "复制成功！";
+            copyText.className = "text-emerald-400 text-xs";
+
+            setTimeout(() => {
+                copyIcon.className = "fa-regular fa-copy text-slate-400";
+                copyText.innerText = "复制命令";
+                copyText.className = "text-slate-400 text-xs";
+            }, 2000);
+        }
+
+        // 重置视图到节点 S1
+        function resetView() {
+            nodeClicked("S1");
+        }
+    </script>
+</body>
+</html>
